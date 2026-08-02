@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_API_URL + "/status")
-
+        const response = await axios.get(`${API_URL}/status`);
         setData(response.data);
       } catch (error) {
-        console.log(error);
+        console.error("Backend Error:", error);
       }
     };
 
@@ -23,18 +25,33 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  if (!data) {
+    return (
+      <div className="container">
+        <h1 className="title">🚗 AI Driving Copilot</h1>
+        <h2 style={{ textAlign: "center" }}>
+          Connecting to Backend...
+        </h2>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
 
       <h1 className="title">🚗 AI Driving Copilot</h1>
-      <p className="subtitle">Real-Time Autonomous Vehicle Monitoring</p>
+
+      <p className="subtitle">
+        Real-Time Autonomous Vehicle Monitoring
+      </p>
 
       <h3 style={{ textAlign: "center" }}>
-         🕒 {new Date().toLocaleTimeString()}
+        🕒 {new Date().toLocaleTimeString()}
       </h3>
 
-        <div className="grid">
-          <div className="advice-card">
+      <div className="grid">
+
+        <div className="advice-card">
           <h2>🤖 AI Advice</h2>
           <p>{data.ai_advice}</p>
         </div>
@@ -55,7 +72,6 @@ function App() {
 
         <div className="card">
           <h3>🚦 Traffic</h3>
-
           <p
             style={{
               color:
@@ -63,7 +79,7 @@ function App() {
                   ? "red"
                   : data.traffic === "MEDIUM"
                   ? "orange"
-                  : "lime"
+                  : "lime",
             }}
           >
             {data.traffic}
@@ -72,7 +88,6 @@ function App() {
 
         <div className="card">
           <h3>⚠️ Risk</h3>
-
           <p
             style={{
               color:
@@ -80,7 +95,7 @@ function App() {
                   ? "red"
                   : data.risk === "MEDIUM"
                   ? "orange"
-                  : "lime"
+                  : "lime",
             }}
           >
             {data.risk}
@@ -114,9 +129,9 @@ function App() {
             ></div>
           </div>
         </div>
-        
 
       </div>
+
     </div>
   );
 }
