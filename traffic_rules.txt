@@ -1,0 +1,17 @@
+STOP:
+Drivers must come to a complete stop before proceeding.
+
+RED LIGHT:
+Stop before the stop line and wait for green.
+
+GREEN LIGHT:
+Proceed if the intersection is clear.
+
+SPEED LIMIT:
+Drivers must not exceed the posted speed limit.
+
+YIELD:
+Give way to other vehicles and pedestrians.
+
+NO ENTRY:
+Vehicles are prohibited from entering.
